@@ -8,9 +8,12 @@ require 'appium_lib'
 
 Dir['./spec/helper/**/*.rb'].each { |file| require file }
 
+Bundler.require(:test_frameworks, :test_harness, :saucelabs, :libraries, :debugging)
 
-desired_caps = {
-    caps: {
+def desired_caps
+  {
+      caps:
+        {
         appiumVersion: '1.6.2',
         platformName: 'Android',
         platformVersion: '7.1.1',
@@ -19,23 +22,19 @@ desired_caps = {
         appPackage: 'com.propdispatch.pdnextgen',
         appActivity: 'com.propdispatch.pdnextgen.MainActivity',
         uuid: '192.168.232.2:5555'
-    }
-}
-
-@driver = Appium::Driver.new(desired_caps)
-@driver.start_driver
-
+        }
+  }
+end
 
 RSpec.configure do |config|
 
   config.before(:each) do |example|
     # default browser is chrome; others can passed as variables
-    case ENV['platformName'] ||= 'android'
-    when 'android'
-      @driver = Appium::WebDriver.for :remote, :desired_caps => :android
-    when 'ios'
-      @driver = Appium::Driver.for :remote, :desired_caps => :ios
-
+    case ENV['platformName'] ||= appPlatformName
+    when appPlatformName == 'chrome'
+      @driver = Appium::WebDriver.for :remote, :desired_caps => :caps
+    when appPlatformName =='android'
+      @driver = Appium::Driver.for :remote, :desired_caps => :caps
     end
   end
 
