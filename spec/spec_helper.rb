@@ -2,11 +2,10 @@ require 'rspec'
 require 'rubygems'
 require 'bundler'
 require 'appium_lib'
-
-
+require 'selenium-webdriver'
 #require 'rspec/retry'
 #require_relative '../lib/login_credentials'
-# #require 'selenium-webdriver'
+
 
 Dir['./spec/helper/*.rb'].each { |file| require file }
 
@@ -35,6 +34,8 @@ RSpec.configure do |config|
       @driver = Appium::Driver.new(desired_caps, true).start_driver
     when 'chrome'
       @driver = Selenium::WebDriver.for :chrome
+    when 'firefox'
+      @driver = Selenium::WebDriver.for :firefox
     end
   end
 

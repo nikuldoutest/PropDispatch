@@ -6,13 +6,13 @@ class Page
 
 
   def wait_until(seconds=30)
-    Appium::Driver::Wait.new(:timeout => seconds).until {yield}
+    Selenium::WebDriver::Wait.new(:timeout => seconds).until {yield}
   end
 
   def find(locator)
     begin
       wait_until { @driver.find_element(locator)}
-    rescue Appium::Driver::Error::TimeOutError
+    rescue Selenium::WebDriver::Error::TimeOutError
       wait_until { @driver.find_element(locator)}
     end
   end
@@ -73,7 +73,7 @@ class Page
   def is_displayed?(locator)
     begin
       find(locator).displayed?
-    rescue Appium::Driver::Error::TimeOutError
+    rescue Selenium::WebDriver::Error::TimeOutError
       return false
       raise 'Element is not displayed'
     else
@@ -84,7 +84,7 @@ class Page
   def is_not_displayed?(locator)
     begin
       find(locator).displayed?
-    rescue Appium::Driver::Error::TimeOutError
+    rescue Selenium::WebDriver::Error::TimeOutError
       return true
       raise 'Element was present'
     else

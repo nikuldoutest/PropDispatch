@@ -15,8 +15,8 @@ module HomeHelpers
 
 
   def verify_login_page_elements
-    login.ui_elements do |ui_elemnt|
-      expect(page.ui_element_displayed?(ui_elemnt)).to be_truthy
+    login.ui_elements do |ui_element|
+      expect(page.ui_element_displayed?(ui_element)).to be_truthy
     end
   end
 
